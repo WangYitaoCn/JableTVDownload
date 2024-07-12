@@ -14,8 +14,14 @@ from encode import ffmpegEncode
 from args import *
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import ssl
+
+
+
 
 def download(url):
+  # 创建一个自定义的 SSL 上下文，忽略证书验证
+  ssl_context = ssl._create_unverified_context()
   encode = 0 #不轉檔
   action = input('要轉檔嗎?[y/n]')
   if action.lower() == 'y':
@@ -59,7 +65,10 @@ def download(url):
 
   # 儲存 m3u8 file 至資料夾
   m3u8file = os.path.join(folderPath, dirName + '.m3u8')
-  urllib.request.urlretrieve(m3u8url, m3u8file)
+  # urllib.request.urlretrieve(m3u8url, m3u8file, context=ssl_context)
+  with urllib.request.urlopen(m3u8url, context=ssl_context) as response:
+      with open(m3u8file, 'wb') as out_file:
+          out_file.write(response.read())
 
   # 得到 m3u8 file裡的 URI和 IV
   m3u8obj = m3u8.load(m3u8file)
