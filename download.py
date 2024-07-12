@@ -16,19 +16,21 @@ from selenium.webdriver.chrome.options import Options
 import ssl
 
 
-def download(url, output_folder):
+def download(url, output_folder, _encode=1, _action='y'):
     # 创建一个自定义的 SSL 上下文，忽略证书验证
     ssl_context = ssl._create_unverified_context()
-    encode = 0  # 不转档
-    action = input('要转档吗?[y/n]')
-    if action.lower() == 'y':
-        action = input('选择转档方案[1:仅转换格式(默认,推荐) 2:NVIDIA GPU 转档 3:CPU 转档]')
-        if action == '2':
-            encode = 2  # GPU 转档
-        elif action == '3':
-            encode = 3  # CPU 转档
-        else:
-            encode = 1  # 快速无损转档
+    # encode = 0  # 不转档
+    # action = input('要转档吗?[y/n]')
+    encode = _encode
+    action = _action
+    # if action.lower() == 'y':
+    #     # action = input('选择转档方案[1:仅转换格式(默认,推荐) 2:NVIDIA GPU 转档 3:CPU 转档]')
+    #     if action == '2':
+    #         encode = 2  # GPU 转档
+    #     elif action == '3':
+    #         encode = 3  # CPU 转档
+    #     else:
+    #         encode = 1  # 快速无损转档
 
     print('正在下载影片: ' + url)
     # 建立番号资料夹
