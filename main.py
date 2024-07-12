@@ -23,4 +23,5 @@ elif(args.all_urls != ""):
 else:
     # 使用者輸入Jable網址
     url = input('輸入jable網址:')
-    download(url)
+    output_folder = input('輸入輸出資料夾:')
+    download(url, output_folder)
