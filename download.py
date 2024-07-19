@@ -4,6 +4,8 @@ import re
 import urllib.request
 import m3u8
 from Crypto.Cipher import AES
+from selenium.webdriver.common.by import By
+
 from config import headers
 from crawler import prepareCrawl
 from merge import mergeMp4
@@ -51,8 +53,18 @@ def download(url, output_folder, _encode=1, _action='y'):
     options.add_argument('--headless')
     options.add_argument(
         "user-agent=Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36")
+
+    # 创建 webdriver 实例
     dr = webdriver.Chrome(options=options)
     dr.get(url)
+    # 使用 BeautifulSoup 解析网页内容
+    soup = BeautifulSoup(dr.page_source, 'html.parser')
+    # 查找所有 <h4> 标签
+    h4_tags = soup.find_all('h4')
+    title = h4_tags[0].text
+    print(title)
+
+
     result = re.search("https://.+m3u8", dr.page_source)
     print(f'result: {result}')
     m3u8url = result[0]
@@ -114,4 +126,4 @@ def download(url, output_folder, _encode=1, _action='y'):
     getCover(html_file=dr.page_source, folder_path=folderPath)
 
     # 转档
-    ffmpegEncode(folderPath, dirName, encode)
+    ffmpegEncode(folderPath, dirName, title ,encode)

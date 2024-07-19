@@ -3,7 +3,7 @@ import subprocess
 import traceback
 
 
-def ffmpegEncode(folder_path, file_name, action):
+def ffmpegEncode(folder_path, file_name, title, action):
     if action == 0:  #不轉檔
         return
     elif action == 1:  #快速無損轉檔
@@ -13,7 +13,7 @@ def ffmpegEncode(folder_path, file_name, action):
                              '-c', 'copy', '-bsf:a', 'aac_adtstoasc', '-movflags', '+faststart',
                              f'f_{file_name}.mp4'])
             os.remove(os.path.join(folder_path, f'{file_name}.mp4'))
-            os.rename(os.path.join(folder_path, f'f_{file_name}.mp4'), os.path.join(folder_path, f'{file_name}.mp4'))
+            os.rename(os.path.join(folder_path, f'f_{file_name}.mp4'), os.path.join(folder_path, f'{title}.mp4'))
             print("快速無損轉檔,轉檔成功")
 
         except Exception as e:
