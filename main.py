@@ -28,4 +28,11 @@ else:
     output_folder = input('輸入輸出資料夾:')
     if output_folder == "":
         output_folder = '/Users/yitaowang/Downloads/film'
-    download(url, output_folder)
+
+    success = False
+    while not success:
+        try:
+            download(url, output_folder)
+            success = True
+        except Exception as e:
+            print(f"下载 {url} 时遇到意外错误: {e}，重试中...")

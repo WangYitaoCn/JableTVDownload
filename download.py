@@ -61,7 +61,8 @@ def download(url, output_folder, _encode=1, _action='y'):
     soup = BeautifulSoup(dr.page_source, 'html.parser')
     # 查找所有 <h4> 标签
     h4_tags = soup.find_all('h4')
-    title = h4_tags[0].text
+    print(h4_tags)
+    title = h4_tags[0]
     print(title)
 
 
