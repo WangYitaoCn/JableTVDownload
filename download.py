@@ -62,7 +62,7 @@ def download(url, output_folder, _encode=1, _action='y'):
     # 查找所有 <h4> 标签
     h4_tags = soup.find_all('h4')
     print(h4_tags)
-    title = h4_tags[0]
+    title = h4_tags[0].text
     print(title)
 
 
